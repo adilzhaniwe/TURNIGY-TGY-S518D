@@ -36,12 +36,14 @@ Some useful features and specifications from that website are:
 
 "Compatible with Robotis Dynamixel communication protocols" means that it has to support RS-485 via USB2Dynamixel adapter and can be controlled using Dynamixel Wizard. However, it is impossible since the original software always checks for originality of a motor. Being more specific, Dynamixel Wizard is able to find it, thereby prompting the baud rate (500kHz), but do not allow any further actions with TGY-S518D. 
 
-**The method of solving this problem**
+**There two methods to solve this problem**
+
+## Using Arduino
 It is possible to control TGY-S518D using Arduino board (Mega 2560). However, it will require an additional transceiver module to interface Arduino to RS-458 protocol. I've used this [MAX485 RS485 transiever module]
 
 <img src="https://hobbycomponents.com/1655-home_default/max485-rs485-transceiver-module.jpg" width="250" height="200">
 
-### 1. Wiring connection
+#### 1. Wiring connection
 
 |**Arduino**|**MAX485**|**TGY-S518D**|
 |:---------:|:--------:|:-----------:|
@@ -59,9 +61,30 @@ It is possible to control TGY-S518D using Arduino board (Mega 2560). However, it
 -	Remember: there is a common ground for all connect devices; set current limit to ~1A.
 - Only TX0 and RX0 can handle 500K bps (with a 16MHz clock the serial port can handle 1Mbps). Other serial ports are limited to 115200 bps. To use them, firstly, change baud rate with *“Dynamixel.setBD()”* function. (*some TGY-S518D can’t store new baud rate! Every time when power supply turned off, motor's baud rate changes to initial 500k bps*) 
 -	RS-485 supports up to 32 independent channels, so you can control many servos with nothing more than an Arduino and one MAX485 module! Just remember to give your servo a unique ID.
+- 7V DC voltage applied to VCC port of TGY-S518D from a power supply/battery, GND is connected to the common ground. 
+
+![Screenshot](schemeduino.png)
+
+#### 2. Software
+2.1 Download and install [this library for Dynamixel]
+
+2.2 Set the baud rate to 500K
+
+2.3 Tune *"broadcast ID"* (by default ID=1)
+
+## Using PC terminal
+
+Knowing motor’s protocol, it is easy to control "Chinamixel" without any additional devices. Only things needed are RS485-to-USB adapter (like USB2Dynamixel adapter).  
+
+![Photo](pic1.jpg)
+
 
 [here]: https://hobbyking.com/en_us/turnigy-tgy-s518d-300-digital-metal-gear-intelligent-robot-servo-16-5kg-0-19s.html?___store=en_us
 [MAX485 RS485 transiever module]: https://hobbycomponents.com/wired-wireless/663-max485-rs485-transceiver-module
+[this library for Dynamixel]: https://github.com/OpenBionics/Robot-Hands/tree/master/Software/Arduino/Libraries/DynamixelSerial
+
+
+
 Files:
 
 1. "Dynamixel_python.py" - the python code itself
