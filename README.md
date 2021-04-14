@@ -1,5 +1,5 @@
 # TURNIGY-TGY-S518D
-This is a python library for chinese clone of Dynamixel MX-28
+This is a python library for Chinese clone of Dynamixel MX-28 - so called "Chinamixel"
 
 Files:
 
