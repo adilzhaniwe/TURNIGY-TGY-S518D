@@ -34,24 +34,34 @@ Some useful features and specifications from that website are:
 - Wire Length: 20cm
 
 
+"Compatible with Robotis Dynamixel communication protocols" means that it has to support RS-485 via USB2Dynamixel adapter and can be controlled using Dynamixel Wizard. However, it is impossible since the original software always checks for originality of a motor. Being more specific, Dynamixel Wizard is able to find it, thereby prompting the baud rate (500kHz), but do not allow any further actions with TGY-S518D. 
+
+**The method of solving this problem**
+It is possible to control TGY-S518D using Arduino board (Mega 2560). However, it will require an additional transceiver module to interface Arduino to RS-458 protocol. I've used this [MAX485 RS485 transiever module]
+
+<img src="https://hobbycomponents.com/1655-home_default/max485-rs485-transceiver-module.jpg" width="250" height="200">
+
+### 1. Wiring connection
+
+|**Arduino**|**MAX485**|**TGY-S518D**|
+|:---------:|:--------:|:-----------:|
+| Pin 2     | DE       |  -          |
+| Pin 2     | RE       |  -          |
+| TX0       | DI       |  -          |
+| RX0       | RO       |  -          |
+| GND       | GND      |  GND        |
+| 5V        | VCC      |  -          |
+| -         | A        |  Data +     |
+| -         | B        |  Data -     |
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+- Pin 2 - direction pin - controls the MAX485's "enable"
+-	Remember: there is a common ground for all connect devices; set current limit to ~1A.
+- Only TX0 and RX0 can handle 500K bps (with a 16MHz clock the serial port can handle 1Mbps). Other serial ports are limited to 115200 bps. To use them, firstly, change baud rate with *“Dynamixel.setBD()”* function. (*some TGY-S518D can’t store new baud rate! Every time when power supply turned off, motor's baud rate changes to initial 500k bps*) 
+-	RS-485 supports up to 32 independent channels, so you can control many servos with nothing more than an Arduino and one MAX485 module! Just remember to give your servo a unique ID.
 
 [here]: https://hobbyking.com/en_us/turnigy-tgy-s518d-300-digital-metal-gear-intelligent-robot-servo-16-5kg-0-19s.html?___store=en_us
-
+[MAX485 RS485 transiever module]: https://hobbycomponents.com/wired-wireless/663-max485-rs485-transceiver-module
 Files:
 
 1. "Dynamixel_python.py" - the python code itself
