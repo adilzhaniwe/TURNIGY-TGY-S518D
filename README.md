@@ -72,22 +72,21 @@ It is possible to control TGY-S518D using Arduino board (Mega 2560). However, it
 
 2.3 Tune *"broadcast ID"* (by default ID=1)
 
-## Using PC terminal
+## Using PC terminal (Linux OS)
 
 Knowing motor’s protocol, it is easy to control "Chinamixel" without any additional devices. Only things needed are RS485-to-USB adapter (like USB2Dynamixel adapter).  
 
 ![Photo](pic1.jpg)
 
+1. Turnigy TGY-S518D has [protocol] similar to Dynamixel MX 1.0
+2. We took a library that we used for Arduino and re-wrote it in python. 
+3. To run the file in terminal (Linux Ubuntu) type: `$ python -c “execfile(‘FILE.py’); command (variables)” `
+
+
+The python code is attached: "Dynamixel_python.py"
+
 
 [here]: https://hobbyking.com/en_us/turnigy-tgy-s518d-300-digital-metal-gear-intelligent-robot-servo-16-5kg-0-19s.html?___store=en_us
 [MAX485 RS485 transiever module]: https://hobbycomponents.com/wired-wireless/663-max485-rs485-transceiver-module
 [this library for Dynamixel]: https://github.com/OpenBionics/Robot-Hands/tree/master/Software/Arduino/Libraries/DynamixelSerial
-
-
-
-Files:
-
-1. "Dynamixel_python.py" - the python code itself
-
-2. "chinamixel readme.docx" - detailed HowTo for connection and getting started
-
+[protocol]: http://emanual.robotis.com/docs/en/dxl/protocol1/#communication-overview 
